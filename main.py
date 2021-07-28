@@ -41,7 +41,8 @@ class Diary(Frame):
         if fl != '':
             self.my_string_var.set(self.read_from_file(fl))
 
-        self.label_dir['text'] = self._get_list_dir()   
+        self.label_dir['text'] = self._get_list_dir()
+
 
 
     def read_from_file(self, filename):
@@ -76,5 +77,6 @@ class Diary(Frame):
 if __name__ == "__main__":
     window = tkinter.Tk()
     window.geometry('700x500')
+    window.resizable(False, False)
     e = Diary(window)
     window.mainloop()
