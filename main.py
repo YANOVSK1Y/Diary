@@ -37,19 +37,22 @@ class Diary(Frame):
 
 
     def open_file(self):
-        f_types = [("All Files","*.*"),("PDF File" , "*.pdf"), ('Python files', '*.py'), ("Text files", '*.txt')]
-        dlg = fd.Open(self, filetypes = f_types)
-        fl = dlg.show()
-        self.label_text.delete('1.0', END)
-        if fl != '':
-            self.my_string_var.set(self.read_from_file(fl))
-        # self.label_dir['text'] = self._get_list_dir()
-        self.label_dir.delete('1.0', END)
-        self.label_dir.insert(END, "Files in this dir:\n")
-        for i in self._get_list_dir():
-            self.label_dir.insert(END, str(f"  {str(i)}\n"))
-        #disable input to block text
-        self.label_dir.config(state=DISABLED)
+        try:
+            f_types = [("All Files","*.*"),("PDF File" , "*.pdf"), ('Python files', '*.py'), ("Text files", '*.txt')]
+            dlg = fd.Open(self, filetypes = f_types)
+            fl = dlg.show()
+            self.label_text.delete('1.0', END)
+            if fl != '':
+                self.my_string_var.set(self.read_from_file(fl))
+            # self.label_dir['text'] = self._get_list_dir()
+            self.label_dir.delete('1.0', END)
+            self.label_dir.insert(END, "Files in this dir:\n")
+            for i in self._get_list_dir():
+                self.label_dir.insert(END, str(f"  {str(i)}\n"))
+            #disable input to block text
+            self.label_dir.config(state=DISABLED)
+        except FileExistsError as e :
+            print(e.message())
 
 
 
