@@ -1,5 +1,6 @@
 import tkinter
 from tkinter import filedialog as fd, Frame, StringVar, Menu
+from tkinter import *
 import os
 import datetime
 from datetime import *
@@ -27,7 +28,8 @@ class Diary(Frame):
         self.mainmenu.add_command(label='Open', command=self.open_file)
         self.mainmenu.add_command(label='Save', command=self.save)
         #create labels for brows and addit text
-        self.label_dir = tkinter.Label(text='', justify='left',  bg='grey', width=20, height=25)
+        # self.label_dir = tkinter.Label(text='', justify='left',  bg='grey', width=20, height=25)
+        self.label_dir = tkinter.Text(bg='grey', width=20, height=25)
         self.label_dir.place(x=50, y=50)
         self.label_text = tkinter.Text(bg='grey', width=45, height=25)
         self.label_text.place(x=250, y = 50)
@@ -38,10 +40,16 @@ class Diary(Frame):
         f_types = [("All Files","*.*"),("PDF File" , "*.pdf"), ('Python files', '*.py'), ("Text files", '*.txt')]
         dlg = fd.Open(self, filetypes = f_types)
         fl = dlg.show()
+        self.label_text.delete('1.0', END)
         if fl != '':
             self.my_string_var.set(self.read_from_file(fl))
-
-        self.label_dir['text'] = self._get_list_dir()
+        # self.label_dir['text'] = self._get_list_dir()
+        self.label_dir.delete('1.0', END)
+        self.label_dir.insert(END, "Files in this dir:\n")
+        for i in self._get_list_dir():
+            self.label_dir.insert(END, str(f"  {str(i)}\n"))
+        #disable input to block text
+        self.label_dir.config(state=DISABLED)
 
 
 
